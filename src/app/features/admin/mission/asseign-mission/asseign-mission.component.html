@@ -1,0 +1,25 @@
+<div class="card p-3 shadow-sm" style="max-width: 480px; margin:auto; background-color: #fdfcff;">
+  <h5 class="card-title text-center mb-3" style="color:#553CDF;">Assigner une mission</h5>
+
+  <form [formGroup]="assignForm" (ngSubmit)="onAssign()" class="d-flex flex-column gap-2">
+    <div class="input-group input-group-sm">
+      <span class="input-group-text bg-primary text-white">
+        <i class="bi bi-person-fill"></i>
+      </span>
+      <select class="form-select" formControlName="userId">
+        <option value="" disabled selected>Sélectionner un utilisateur</option>
+        <option *ngFor="let user of users" [value]="user.id">
+          {{ user.firstname }} {{ user.lastname }}
+        </option>
+      </select>
+    </div>
+
+    <div *ngIf="submitted && f['userId'].invalid" class="text-danger small mt-1">
+      ⚠ Veuillez sélectionner un utilisateur
+    </div>
+
+    <button type="submit" class="btn btn-success btn-sm d-flex align-items-center justify-content-center gap-1">
+      <i class="bi bi-person-plus-fill"></i> Assigner
+    </button>
+  </form>
+</div>

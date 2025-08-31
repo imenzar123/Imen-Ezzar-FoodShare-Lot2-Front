@@ -1,0 +1,100 @@
+<div class="container mt-4">
+  <div class="row" *ngIf="missions && missions.length > 0; else noMissions">
+    <div *ngFor="let mission of missions" class="col-md-4 mb-4">
+      <div class="card mission-card h-100 shadow-lg border-0 rounded-4">
+        <div class="card-body d-flex flex-column p-4">
+
+          <!-- Titre -->
+          <h5 class="card-title text-dark fw-bold mb-3">{{ mission.title }}</h5>
+
+          <!-- Description -->
+          <p class="card-text description text-muted mb-3">
+            {{ mission.description }}
+          </p>
+
+          <!-- Badges -->
+          <div class="mb-3">
+            <div class="d-flex flex-wrap gap-2">
+              <span class="badge bg-primary px-3 py-2 fw-normal">
+                <i class="bi bi-tag me-1"></i>{{ mission.requiredSkill }}
+              </span>
+              <span class="badge px-3 py-2 fw-normal"
+                    [ngClass]="{
+                      'bg-secondary': mission.status === 'PENDING',
+                      'bg-primary': mission.status === 'IN_PROGRESS',
+                      'bg-success': mission.status === 'COMPLETED',
+                      'bg-danger': mission.status === 'CANCELLATION'
+                    }">
+                <i class="bi bi-circle-fill me-1" style="font-size: 6px;"></i>
+                {{ mission.status }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Dates -->
+          <div class="mb-4">
+            <div class="d-flex align-items-center text-muted mb-2">
+              <i class="bi bi-calendar3 me-2 text-primary"></i>
+              <small><strong>Début :</strong> {{ mission.startDate | date:'shortDate' }}</small>
+            </div>
+            <div class="d-flex align-items-center text-muted">
+              <i class="bi bi-calendar-check me-2 text-primary"></i>
+              <small><strong>Fin :</strong> {{ mission.endDate | date:'shortDate' }}</small>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="mt-auto">
+            <div class="d-flex justify-content-center gap-2">
+              <!-- Bouton Compléter uniquement si IN_PROGRESS -->
+              <button *ngIf="mission.status === 'IN_PROGRESS'"
+                      class="btn btn-success btn-sm px-3 py-2"
+                      (click)="completeMission(mission)">
+                <i class="bi bi-check-circle me-1"></i>Compléter
+              </button>
+
+              <!-- Bouton Détails -->
+              <button class="btn btn-outline-primary btn-sm px-3 py-2"
+                      (click)="showMissionDetails(mission)"
+                      title="Voir détails">
+                <i class="bi bi-eye me-1"></i>Détails
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Message si aucune mission -->
+  <ng-template #noMissions>
+    <div class="col-12 text-center py-5">
+      <div class="bg-light rounded-4 p-5">
+        <i class="bi bi-inbox display-4 text-muted mb-3"></i>
+        <h5 class="text-muted mb-2">Aucune mission disponible.</h5>
+        <p class="text-muted small">Revenez plus tard pour voir les nouvelles missions</p>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- Pagination -->
+  <nav *ngIf="pageResponse && pageResponse.totalPages && pageResponse.totalPages > 1" class="mt-4">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="pageResponse.first">
+        <a class="page-link rounded-3 mx-1" (click)="goToPage(page - 1)">
+          <i class="bi bi-chevron-left me-1"></i>Précédent
+        </a>
+      </li>
+      <li class="page-item"
+          *ngFor="let p of [].constructor(pageResponse.totalPages); let i = index"
+          [class.active]="i === page">
+        <a class="page-link rounded-3 mx-1" (click)="goToPage(i)">{{ i + 1 }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="pageResponse.last">
+        <a class="page-link rounded-3 mx-1" (click)="goToPage(page + 1)">
+          Suivant<i class="bi bi-chevron-right ms-1"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

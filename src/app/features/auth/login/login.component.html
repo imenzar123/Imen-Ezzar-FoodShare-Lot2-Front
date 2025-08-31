@@ -1,0 +1,53 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow-lg p-4" style="width: 400px; border-radius: 12px;">
+    <h3 class="text-center mb-4">Se connecter</h3>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Email :</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          formControlName="email"
+          [ngClass]="{'is-invalid': submitted && f['email']?.errors}"
+        />
+        <div *ngIf="submitted && f['email']?.errors" class="invalid-feedback">
+          <div *ngIf="f['email'].errors?.['required']">L'email est obligatoire</div>
+          <div *ngIf="f['email'].errors?.['email']">Email invalide</div>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <label for="password" class="form-label">Mot de passe :</label>
+        <input
+          type="password"
+          id="password"
+          class="form-control"
+          formControlName="password"
+          [ngClass]="{'is-invalid': submitted && f['password']?.errors}"
+        />
+        <div *ngIf="submitted && f['password']?.errors" class="invalid-feedback">
+          <div *ngIf="f['password'].errors?.['required']">Le mot de passe est obligatoire</div>
+          <div *ngIf="f['password'].errors?.['minlength']">
+            Minimum 6 caractères
+          </div>
+        </div>
+      </div>
+
+
+      <button type="submit" class="btn btn-primary w-100 mb-3">
+        Connexion
+      </button>
+    </form>
+
+
+    <div class="d-flex justify-content-between">
+      <a routerLink="/forgot-password">Mot de passe oublié ?</a>
+      <a routerLink="/register">Créer un compte</a>
+    </div>
+  </div>
+</div>

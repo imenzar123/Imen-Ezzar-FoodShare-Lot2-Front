@@ -1,0 +1,56 @@
+<div class="container mt-4" *ngIf="!loading; else loadingTpl">
+  <h3>Détails de la Mission</h3>
+  <table class="table table-bordered table-striped">
+    <tbody>
+    <tr>
+      <th>Titre</th>
+      <td>{{ mission.title }}</td>
+    </tr>
+    <tr>
+      <th>Description</th>
+      <td>{{ mission.description }}</td>
+    </tr>
+    <tr>
+      <th>Compétence requise</th>
+      <td>{{ mission.requiredSkill }}</td>
+    </tr>
+    <tr>
+      <th>Status</th>
+      <td>{{ mission.status }}</td>
+    </tr>
+    <tr>
+      <th>Date de début</th>
+      <td>{{ mission.startDate | date }}</td>
+    </tr>
+    <tr>
+      <th>Date de fin</th>
+      <td>{{ mission.endDate | date }}</td>
+    </tr>
+    <tr>
+      <th>Assignée</th>
+      <td>
+        <span *ngIf="mission.isAsseigned; else notAssigned">Oui</span>
+        <ng-template #notAssigned>Non</ng-template>
+      </td>
+    </tr>
+    <tr>
+      <th>Date de création</th>
+      <td>{{ mission.creationDate | date:'medium' }}</td>
+    </tr>
+    <tr>
+      <th>Dernière modification</th>
+      <td>{{ mission.lastModifiedDate | date:'medium' }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <button class="btn btn-secondary" (click)="goBack()">Retour</button>
+</div>
+
+<ng-template #loadingTpl>
+  <div class="text-center mt-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</ng-template>

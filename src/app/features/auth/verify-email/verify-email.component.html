@@ -1,0 +1,35 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow-lg p-4" style="width: 400px; border-radius: 12px;">
+    <h3 class="text-center mb-4">Vérification du code</h3>
+    <p class="text-center text-muted mb-4">Veuillez entrer le code à 6 chiffres envoyé sur votre email.</p>
+
+    <form [formGroup]="verifyForm" (ngSubmit)="onSubmit()">
+
+      <!-- Code -->
+      <div class="mb-3">
+        <label for="code" class="form-label">Code de vérification :</label>
+        <input
+          type="text"
+          id="code"
+          class="form-control"
+          formControlName="code"
+          [ngClass]="{'is-invalid': f['code'].invalid && (f['code'].dirty || f['code'].dirty)}"
+        />
+        <div *ngIf="f['code'].invalid && (f['code'].dirty || f['code'].dirty)" class="invalid-feedback">
+          <div *ngIf="f['code'].errors?.['required']">Le code est obligatoire</div>
+          <div *ngIf="f['code'].errors?.['pattern']">Le code doit contenir 6 chiffres</div>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="btn btn-primary w-100">
+        Vérifier
+      </button>
+    </form>
+
+    <!-- Lien renvoyer code -->
+    <div class="text-center mt-3">
+      <small>Vous n'avez pas reçu le code ? <a href="#">Renvoyer</a></small>
+    </div>
+  </div>
+</div>

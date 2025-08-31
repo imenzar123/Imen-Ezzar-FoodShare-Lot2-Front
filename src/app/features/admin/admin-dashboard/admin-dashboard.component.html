@@ -1,0 +1,59 @@
+<div class="container mt-4" *ngIf="stats">
+  <!-- Cartes principales -->
+  <div class="row mb-4 g-3">
+    <div class="col-md-3" *ngFor="let card of [
+      {label:'Total Users', value: stats.totalUsers, color:'bg-primary'},
+      {label:'Total Missions', value: stats.totalMissions, color:'bg-success'},
+      {label:'Pending', value: stats.pendingMissions, color:'bg-warning'},
+      {label:'In Progress', value: stats.inProgressMissions, color:'bg-info'},
+      {label:'Completed', value: stats.completedMissions, color:'bg-success'},
+      {label:'Cancelled', value: stats.cancelledMissions, color:'bg-danger'}
+    ]">
+      <div class="card text-white {{card.color}} shadow-sm mb-2">
+        <div class="card-body text-center">
+          <h5>{{ card.label }}</h5>
+          <h3>{{ card.value }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Graphiques -->
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5>Répartition des missions par compétence</h5>
+          <canvas baseChart
+                  [data]="skillsChartData"
+                  [type]="skillsChartType">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5>Top utilisateurs (missions assignées)</h5>
+          <canvas baseChart
+                  [data]="userChartData"
+                  [type]="userChartType">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5>Missions complétées par mois</h5>
+          <canvas baseChart
+                  [data]="monthChartData"
+                  [type]="monthChartType">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

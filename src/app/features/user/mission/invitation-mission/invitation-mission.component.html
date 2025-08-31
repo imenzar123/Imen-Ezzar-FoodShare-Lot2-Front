@@ -1,0 +1,98 @@
+<div class="container mt-4">
+  <div class="row" *ngIf="missions && missions.length > 0; else noMissions">
+    <div *ngFor="let mission of missions" class="col-md-4 mb-4">
+      <div class="card mission-card h-100 shadow-lg border-0">
+        <div class="card-body d-flex flex-column">
+
+          <!-- Header avec titre -->
+          <div class="mb-3">
+            <h5 class="card-title text-primary fw-bold">{{ mission.title }}</h5>
+          </div>
+
+          <!-- Description -->
+          <p class="card-text description text-muted mb-3">
+            {{ mission.description }}
+          </p>
+
+          <!-- Badges -->
+          <div class="mb-3">
+            <div class="d-flex flex-wrap gap-2">
+              <span class="badge bg-primary px-3 py-2 skill-badge">
+                <i class="bi bi-trophy me-1"></i>{{ mission.requiredSkill }}
+              </span>
+              <span class="badge px-3 py-2 fw-normal"
+                    [ngClass]="{
+                      'bg-warning text-dark': mission.status === 'PENDING',
+                      'bg-info': mission.status === 'IN_PROGRESS',
+                      'bg-success': mission.status === 'COMPLETED',
+                      'bg-danger': mission.status === 'CANCELLATION'
+                    }">
+                <i class="bi bi-circle-fill me-1" style="font-size: 6px;"></i>
+                {{ mission.status }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Dates -->
+          <div class="mb-3">
+            <div class="d-flex align-items-center text-muted mb-2">
+              <i class="bi bi-calendar-start me-2"></i>
+              <small><strong>Début :</strong> {{ mission.startDate | date:'shortDate' }}</small>
+            </div>
+            <div class="d-flex align-items-center text-muted">
+              <i class="bi bi-calendar-check me-2"></i>
+              <small><strong>Fin :</strong> {{ mission.endDate | date:'shortDate' }}</small>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="mt-auto">
+            <div class="d-flex justify-content-center gap-2">
+              <button class="btn btn-success btn-sm px-3 py-2" (click)="acceptMission1(mission)">
+                <i class="bi bi-check-lg me-1"></i>Accepter
+              </button>
+              <button class="btn btn-danger btn-sm px-3 py-2" (click)="rejectMission(mission)">
+                <i class="bi bi-x-lg me-1"></i>Rejeter
+              </button>
+              <button class="btn btn-outline-info btn-sm px-3 py-2" (click)="showMissionDetails(mission)" title="Voir détails">
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Template alternatif si aucune mission -->
+  <ng-template #noMissions>
+    <div class="col-12 text-center py-5">
+      <div class="bg-light rounded-3 p-5">
+        <i class="bi bi-inbox fs-1 text-muted mb-3"></i>
+        <h5 class="text-muted mb-2">Aucune mission d'invitation disponible pour le moment.</h5>
+        <p class="text-muted small">Les missions apparaîtront ici lorsqu'elles vous seront assignées</p>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- Pagination améliorée -->
+  <nav *ngIf="pageResponse && pageResponse.totalPages && pageResponse.totalPages > 1" class="mt-4">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="pageResponse.first">
+        <a class="page-link" (click)="goToPage(page - 1)">
+          <i class="bi bi-chevron-left me-1"></i>Précédent
+        </a>
+      </li>
+      <li class="page-item"
+          *ngFor="let p of [].constructor(pageResponse.totalPages); let i = index"
+          [class.active]="i === page">
+        <a class="page-link" (click)="goToPage(i)">{{ i + 1 }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="pageResponse.last">
+        <a class="page-link" (click)="goToPage(page + 1)">
+          Suivant<i class="bi bi-chevron-right ms-1"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

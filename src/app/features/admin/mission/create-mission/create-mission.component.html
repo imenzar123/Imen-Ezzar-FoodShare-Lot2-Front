@@ -1,0 +1,52 @@
+<form [formGroup]="missionForm" (ngSubmit)="onSubmit()" class="p-4 border rounded" style="max-width:500px; margin:auto;">
+  <h3 class="mb-3 text-center">Ajouter Mission</h3>
+
+  <!-- Title -->
+  <div class="mb-3">
+    <label>Title</label>
+    <input type="text" class="form-control" formControlName="title">
+    <div *ngIf="f['title']?.invalid && submitted" class="text-danger">
+      Le titre est obligatoire
+    </div>
+  </div>
+
+  <!-- Description -->
+  <div class="mb-3">
+    <label>Description</label>
+    <textarea class="form-control" formControlName="description"></textarea>
+    <div *ngIf="f['description']?.invalid && submitted" class="text-danger">
+      Description obligatoire
+    </div>
+  </div>
+
+  <!-- Start Date -->
+  <div class="mb-3">
+    <label>Start Date</label>
+    <input type="date" class="form-control" formControlName="startDate">
+    <div *ngIf="f['startDate']?.invalid && submitted" class="text-danger">
+      Date de début obligatoire
+    </div>
+  </div>
+
+  <!-- End Date -->
+  <div class="mb-3">
+    <label>End Date</label>
+    <input type="date" class="form-control" formControlName="endDate">
+    <div *ngIf="f['endDate']?.invalid && submitted" class="text-danger">
+      Date de fin obligatoire
+    </div>
+  </div>
+
+  <!-- Skill -->
+  <div class="mb-3">
+    <label>Skill requis</label>
+    <select class="form-select" formControlName="requiredSkill">
+      <option *ngFor="let skill of skills" [value]="skill">{{ skill }}</option>
+    </select>
+  </div>
+
+
+
+  <!-- Submit -->
+  <button type="submit" class="btn btn-primary w-100">Ajouter</button>
+</form>

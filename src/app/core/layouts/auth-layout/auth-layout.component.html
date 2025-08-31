@@ -1,0 +1,31 @@
+<div class="auth-layout d-flex min-vh-100">
+
+  <!-- Left side with image or illustration -->
+  <div class="auth-illustration d-none d-md-flex flex-column justify-content-center align-items-center text-white p-5"
+       style="background: linear-gradient(135deg, #4a90e2, #357abd); width: 50%;">
+    <img src="auth.png" alt="Illustration" class="img-fluid mb-4" style="max-width: 300px;">
+    <h2 class="fw-bold">Bienvenue sur MonApplication</h2>
+    <p class="opacity-75">Simplifiez la gestion avec une expérience moderne.</p>
+  </div>
+
+  <!-- Right side with card -->
+  <div class="auth-form-wrapper d-flex justify-content-center align-items-center flex-grow-1 p-4">
+    <div class="auth-card w-100" style="max-width: 400px;">
+
+      <!-- Branding -->
+      <div class="text-center mb-4">
+        <img src="logo.png" alt="Logo" width="70" class="mb-3">
+        <h3 class="fw-bold text-primary">Connexion</h3>
+      </div>
+
+      <!-- Pages (login/register/forgot...) -->
+      <router-outlet></router-outlet>
+
+      <!-- Footer -->
+      <div class="text-center mt-4">
+        <small class="text-muted">© 2025 MonApplication</small>
+      </div>
+    </div>
+  </div>
+
+</div>
